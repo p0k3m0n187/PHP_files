@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `ref_menu` (
   `id` int(11) DEFAULT NULL,
-  `menu_name` varchar(50) DEFAULT NULL,
-  `menu_desc` varchar(50) DEFAULT NULL,
+  `menu_name` varchar(100) DEFAULT NULL,
+  `menu_desc` varchar(1000) DEFAULT NULL,
   `price` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

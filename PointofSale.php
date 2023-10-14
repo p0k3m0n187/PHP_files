@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1 class="text-center">Create Menu</h1>
-        <form action="user_input.php" method="post">
+        <form action="AddMenu.php" method="post">
             <div class="mb-3">
                 <label for="name" class="form-label">Menu Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
@@ -26,41 +26,40 @@
     <!-- Add Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoJtKh7z7lGz7fuP4F8nfdFvAOA6Gg/z6Y5J6XqqyGXYM2ntX5" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqFjcJ6pajs/rfdfs3SO+kD4Ck5BdPtF+to8xMp9Mvc9l84l+78+m696jLmfIjzj6t" crossorigin="anonymous"></script>
+    <script>
+        // Add character limit alerts
+        document.getElementById('name').addEventListener('input', function() {
+            if (this.value.length > 100) {
+                swal.fire('Character Limit Exceeded', 'Menu Name should not exceed 100 characters.', 'error');
+                this.value = this.value.substring(0, 100);
+            }
+        });
+
+        document.getElementById('description').addEventListener('input', function() {
+            if (this.value.length > 1000) {
+                swal.fire('Character Limit Exceeded', 'Description should not exceed 1000 characters.', 'error');
+                this.value = this.value.substring(0, 1000);
+            }
+        });
+
+        // Submit form with Sweet Alert confirmation
+        document.getElementById('menuForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to submit this form?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "pointofsale";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-    echo "Connection Success";
-
-// Set charset to utf8
-mysqli_set_charset($conn, "utf8");
-
-$sql = "INSERT INTO ref_menu (menu_name, menu_desc)
-VALUES ('Bangus', 'Bangus is a filipinos favorite dish.')";
-
-
-// // Get data from form
-// $name = $_POST['name'];
-// $description = $_POST['description'];
-
-//Insert data into database
-// $sql = "INSERT INTO Users (id, name, description) VALUES ('$id', '$name', '$description')";
-
-// if ($conn->query($sql) === TRUE) {
-//     echo "New record created successfully";
-// } else {
-//     echo "Error: " . $sql . "<br>" . $conn->error;
-// }
-?>
